@@ -1,5 +1,6 @@
-package com.example.springboot.services;
+package com.example.springboot.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.util.StringUtils;
 
+import java.util.LinkedList;
+
 @RestController
 public class RestServices {
 
@@ -19,13 +22,22 @@ public class RestServices {
         return "GET Method Called";
     }
 
+    @Autowired
+    private LinkedList<String> allStudents;
+
+    @GetMapping(path = "/getstudents", produces = "application/json")
+    public String getAllStudents() {
+        String response = this.allStudents.toString();
+        System.out.println(response);
+        return response;
+    }
+
     @PostMapping(path = "/posttest", consumes = "application/json", produces = "application/json")
     public String postTest( @RequestBody String jsonStringInput) {
 
         if (StringUtils.isEmpty(jsonStringInput)) {
             return "invalid request";
         }
-
         jsonStringInput = "{\n" +
                 "\"json_sent\":" +
                     jsonStringInput +
