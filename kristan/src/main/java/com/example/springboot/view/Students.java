@@ -11,7 +11,7 @@ import org.json.JSONObject;
 public class Students {
 
     private LinkedList<Student> populateStudents() {
-        LinkedList<Student> students = new LinkedList<Student>();
+        LinkedList<Student> students = new LinkedList<>();
         Student student1 = new Student();
         Student student2 = new Student();
         Student student3 = new Student();
