@@ -52,14 +52,14 @@ public class RestService implements RestInterface {
     public Response patchTest(String jsonInput) {
         System.out.println("PATCH method called");
         System.out.println("Data received \n"+ jsonInput);
-        return Response.ok("PUT method called").build();
+        return Response.ok("PATCH method called").build();
     }
 
     @Override
     public Response delTest(String jsonInput) {
-        System.out.println("PATCH method called");
+        System.out.println("DELETE method called");
         System.out.println("Data received \n"+ jsonInput);
-        return Response.ok("PATCH method called").build();
+        return Response.ok("DELETE method called").build();
     }
 
 }

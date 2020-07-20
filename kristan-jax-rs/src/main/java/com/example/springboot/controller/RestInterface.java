@@ -19,26 +19,26 @@ public interface RestInterface {
     @GET
     public Response getAllStudents();
 
-    @Path("gettest")
+    @Path("get")
     @GET
     public Response getTest();
 
-    @Path("posttest")
+    @Path("post")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response postTest(String jsonInput);
 
-    @Path("puttest")
+    @Path("put")
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public Response putTest(String jsonInput);
 
-    @Path("patchtes")
+    @Path("patch")
     @PATCH
     @Consumes(MediaType.APPLICATION_JSON)
     public Response patchTest(String jsonInput);
 
-    @Path("deltest")
+    @Path("delete")
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     public Response delTest(String jsonInput);
