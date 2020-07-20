@@ -11,11 +11,11 @@ import java.util.LinkedList;
 @SpringBootApplication
 public class Application {
 
-	@Bean
-	public LinkedList<String> initStudents() {
-		Students studentInfo = new Students();
-		return studentInfo.getAllStudents();
-	}
+//	@Bean
+//	public LinkedList<String> initStudents() {
+//		Students studentInfo = new Students();
+//		return studentInfo.getAllStudents();
+//	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);

@@ -1,5 +1,6 @@
 package com.example.springboot.controller;
 
+import com.example.springboot.repository.Students;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
@@ -8,8 +9,15 @@ import java.util.LinkedList;
 
 public class RestService implements RestInterface {
 
-    @Autowired
     private LinkedList<String> allStudents;
+
+    public RestService() {
+        Students studentInfo = new Students();
+        allStudents = studentInfo.getAllStudents();
+    }
+
+//    @Autowired
+//    private LinkedList<String> allStudents;
 
     @Override
     public Response getAllStudents() {
