@@ -16,8 +16,9 @@ public class RestService implements RestInterface {
         String students = this.allStudents.toString();
         System.out.println(students);
 
+        Response response = Response.ok(students).build();
+
         return Response.ok(students)
-                .status(200)
                 .build();
     }
 
