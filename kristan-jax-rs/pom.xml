@@ -82,6 +82,14 @@
 		<version>2.11.1</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.glassfish.jersey.test-framework.providers/jersey-test-framework-provider-jdk-http -->
+		<dependency>
+			<groupId>org.glassfish.jersey.test-framework.providers</groupId>
+			<artifactId>jersey-test-framework-provider-jdk-http</artifactId>
+			<version>3.0.0-M6</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>

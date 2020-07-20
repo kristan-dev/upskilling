@@ -16,13 +16,16 @@ public class RestService implements RestInterface {
         String students = this.allStudents.toString();
         System.out.println(students);
 
-        return Response.ok(students).build();
+        return Response.ok(students)
+                .status(200)
+                .build();
     }
 
     @Override
     public Response getTest() {
         System.out.println("GET method called");
-        return Response.ok("GET method called").build();
+        return Response.ok("GET method called")
+                .build();
     }
 
     @Override
@@ -37,14 +40,16 @@ public class RestService implements RestInterface {
         System.out.println("Data to be returned\n" + jsonInput);
         System.out.println("POST method called");
 
-        return Response.ok(jsonInput).build();
+        return Response.ok(jsonInput)
+                .build();
     }
 
     @Override
     public Response putTest(String jsonInput) {
         System.out.println("PUT method called");
         System.out.println("Data received \n"+ jsonInput);
-        return Response.ok("PUT method called").build();
+        return Response.ok("PUT method called")
+                .build();
     }
 
 
@@ -52,14 +57,16 @@ public class RestService implements RestInterface {
     public Response patchTest(String jsonInput) {
         System.out.println("PATCH method called");
         System.out.println("Data received \n"+ jsonInput);
-        return Response.ok("PATCH method called").build();
+        return Response.ok("PATCH method called")
+                .build();
     }
 
     @Override
     public Response delTest(String jsonInput) {
         System.out.println("DELETE method called");
         System.out.println("Data received \n"+ jsonInput);
-        return Response.ok("DELETE method called").build();
+        return Response.ok("DELETE method called")
+                .build();
     }
 
 }
