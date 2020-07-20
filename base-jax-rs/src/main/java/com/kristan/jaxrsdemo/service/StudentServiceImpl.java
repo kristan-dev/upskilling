@@ -8,7 +8,6 @@ import com.kristan.jaxrsdemo.exception.StudentNotFoundException;
 
 import java.util.Collection;
 
-
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository repository;
