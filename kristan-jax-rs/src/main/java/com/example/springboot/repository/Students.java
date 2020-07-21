@@ -11,23 +11,12 @@ public class Students {
 
     private LinkedList<Student> populateStudents() {
         LinkedList<Student> students = new LinkedList<>();
-        Student student1 = new Student();
-        Student student2 = new Student();
-        Student student3 = new Student();
+        Student student1 = new Student("Kristan", "0", "BSBC");
+        Student student2 = new Student("Melvin", "1", "BSIT");
+        Student student3 = new Student("Joseph", "2", "MSCS");
 
-        student1.setStudentName("Kristan");
-        student1.setStudent_id("0");
-        student1.setProgram("BSCS");
         students.add(student1);
-
-        student2.setStudentName("Melvin");
-        student2.setStudent_id("1");
-        student2.setProgram("BSIT");
         students.add(student2);
-
-        student3.setStudentName("Joseph");
-        student3.setStudent_id("2");
-        student3.setProgram("MSCS");
         students.add(student3);
 
         return students;
@@ -46,8 +35,8 @@ public class Students {
 
         for (Student student : students) {
             HashMap<String, String> studentMap = new HashMap<>();
-            studentMap.put("Name", student.getStudentName());
-            studentMap.put("ID", student.getStudent_Id());
+            studentMap.put("Name", student.getName());
+            studentMap.put("ID", student.getStudent_id());
             studentMap.put("Course", student.getProgram());
             allStudents.add(studentMap);
         }

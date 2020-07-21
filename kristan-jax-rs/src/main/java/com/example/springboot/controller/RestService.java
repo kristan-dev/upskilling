@@ -1,7 +1,6 @@
 package com.example.springboot.controller;
 
 import com.example.springboot.repository.Students;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import javax.ws.rs.core.Response;
@@ -15,9 +14,6 @@ public class RestService implements RestInterface {
         Students studentInfo = new Students();
         allStudents = studentInfo.getAllStudents();
     }
-
-//    @Autowired
-//    private LinkedList<String> allStudents;
 
     @Override
     public Response getAllStudents() {
