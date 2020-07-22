@@ -1,6 +1,7 @@
 package com.example.springboot.controller;
 
-import com.example.springboot.repository.Students;
+import com.example.springboot.repository.StudentRepository;
+import com.example.springboot.model.Student;
 import org.springframework.util.StringUtils;
 
 import javax.ws.rs.core.MediaType;
@@ -14,28 +15,23 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 
-import java.util.LinkedList;
+import java.util.Collection;
 
 @Path("students")
 @Produces(MediaType.APPLICATION_JSON)
 public class RestService {
 
-    private LinkedList<String> allStudents;
+    private Collection<Student> allStudents;
 
     public RestService() {
-        Students studentInfo = new Students();
-        allStudents = studentInfo.getAllStudents();
+        StudentRepository students =  new StudentRepository();
+        allStudents = students.getAllStudents();
     }
 
     @GET
     public Response getAllStudents() {
-        String students = this.allStudents.toString();
-        System.out.println(students);
-
-        Response response = Response.ok(students).build();
-
-        return Response.ok(students)
-                .build();
+        Response response = Response.ok(allStudents).build();
+        return response;
     }
 
     @Path("get")
