@@ -14,9 +14,9 @@ public class StudentRepository {
 
   @PostConstruct
   public void populateStudents() {
-    students.put("0", new Student("Kristan", "000", "BSCS"));
-    students.put("1", new Student("Melvin", "001", "BSIT"));
-    students.put("3", new Student("Joseph", "002", "MSCS"));
+    students.put("studentData", new Student("Kristan", "000", "BSCS"));
+    students.put("studentData", new Student("Melvin", "001", "BSIT"));
+    students.put("studentData", new Student("Joseph", "002", "MSCS"));
   }
 
   public Collection<Student> getAllStudents() {
