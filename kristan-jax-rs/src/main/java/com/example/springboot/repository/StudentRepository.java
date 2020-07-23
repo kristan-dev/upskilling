@@ -1,6 +1,7 @@
 package com.example.springboot.repository;
 
 import com.example.springboot.model.Student;
+//import com.example.springboot.model.StudentBuilder;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -14,14 +15,13 @@ public class StudentRepository {
 
   @PostConstruct
   public void populateStudents() {
-    students.put("studentData", new Student("Kristan", "000", "BSCS"));
-    students.put("studentData", new Student("Melvin", "001", "BSIT"));
-    students.put("studentData", new Student("Joseph", "002", "MSCS"));
+    students.put("studentData0", new Student("Kristan", "000", "BSCS"));
+    students.put("studentData1", new Student("Melvin", "001", "BSIT"));
+    students.put("studentData2", new Student("Joseph", "002", "MSCS"));
   }
 
   public Collection<Student> getAllStudents() {
     populateStudents();
     return students.values();
   }
-  
 }

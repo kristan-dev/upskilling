@@ -2,6 +2,7 @@ package com.example.springboot.controller;
 
 import com.example.springboot.repository.StudentRepository;
 import com.example.springboot.model.Student;
+import com.example.springboot.model.StudentBuilder;
 import org.springframework.util.StringUtils;
 
 import javax.ws.rs.core.MediaType;
@@ -22,6 +23,7 @@ import java.util.Collection;
 public class RestService {
 
     private Collection<Student> allStudents;
+//    private Collection<StudentBuilder> allStudents;
 
     public RestService() {
         StudentRepository students =  new StudentRepository();
