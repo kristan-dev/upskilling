@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 public class StudentRepositoryTest {
+
     @Test
     void getAllStudentsTest() {
         HashMap<String, Student> studentCount = new HashMap<>();
