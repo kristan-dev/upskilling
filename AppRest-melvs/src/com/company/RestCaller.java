@@ -8,24 +8,16 @@ import java.time.Duration;
 
 public class RestCaller {
 
-    public String RestCallerApp() {
-
-        String hello = "https://reqres.in/api/users?page=2";
+    public String RestCallerApp(String uri) throws Exception {
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(hello))
+                .uri(URI.create(uri))
                 .timeout(Duration.ofSeconds(5))
                 .build();
 
         HttpClient client = HttpClient.newHttpClient();
-        client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                .thenApply(response -> { System.out.println("Status Code: " + response.statusCode());
-                  return response; } )
-                .thenApply(HttpResponse::body)
-                .thenAccept(System.out::println)
-                .join();
-
-        String s = request.method();
-        return s;
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        return response.body();
+        
     }
 }
