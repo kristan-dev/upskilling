@@ -8,17 +8,24 @@ import java.time.Duration;
 
 public class RestCaller {
 
-    public void RestCallerApp(String url) {
+    public String RestCallerApp() {
+
+        String hello = "https://reqres.in/api/users?page=2";
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
+                .uri(URI.create(hello))
                 .timeout(Duration.ofSeconds(5))
                 .build();
 
         HttpClient client = HttpClient.newHttpClient();
         client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenApply(response -> { System.out.println("Status Code: " + response.statusCode());
+                  return response; } )
                 .thenApply(HttpResponse::body)
                 .thenAccept(System.out::println)
                 .join();
+
+        String s = request.method();
+        return s;
     }
 }
