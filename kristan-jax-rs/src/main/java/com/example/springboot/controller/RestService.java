@@ -1,43 +1,52 @@
 package com.example.springboot.controller;
 
-import com.example.springboot.repository.Students;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.springboot.repository.StudentRepository;
+import com.example.springboot.model.Student;
+//import com.example.springboot.model.StudentBuilder;
 import org.springframework.util.StringUtils;
 
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.LinkedList;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.PATCH;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.Consumes;
 
-public class RestService implements RestInterface {
+import java.util.Collection;
 
-    private LinkedList<String> allStudents;
+@Path("students")
+@Produces(MediaType.APPLICATION_JSON)
+public class RestService {
+
+    private Collection<Student> allStudents;
+//    private Collection<StudentBuilder> allStudents;
 
     public RestService() {
-        Students studentInfo = new Students();
-        allStudents = studentInfo.getAllStudents();
+        StudentRepository students =  new StudentRepository();
+        allStudents = students.getAllStudents();
     }
 
-//    @Autowired
-//    private LinkedList<String> allStudents;
-
-    @Override
+    @GET
     public Response getAllStudents() {
-        String students = this.allStudents.toString();
-        System.out.println(students);
-
-        Response response = Response.ok(students).build();
-
-        return Response.ok(students)
-                .build();
+        Response response = Response.ok(allStudents).build();
+        return response;
     }
 
-    @Override
+    @Path("get")
+    @GET
     public Response getTest() {
         System.out.println("GET method called");
         return Response.ok("GET method called")
                 .build();
     }
 
-    @Override
+    @Path("post")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response postTest(String jsonInput) {
         if (StringUtils.isEmpty(jsonInput)) {
             return Response.ok("invalid request").build();
@@ -53,7 +62,9 @@ public class RestService implements RestInterface {
                 .build();
     }
 
-    @Override
+    @Path("put")
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response putTest(String jsonInput) {
         System.out.println("PUT method called");
         System.out.println("Data received \n"+ jsonInput);
@@ -61,8 +72,9 @@ public class RestService implements RestInterface {
                 .build();
     }
 
-
-    @Override
+    @Path("patch")
+    @PATCH
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response patchTest(String jsonInput) {
         System.out.println("PATCH method called");
         System.out.println("Data received \n"+ jsonInput);
@@ -70,7 +82,9 @@ public class RestService implements RestInterface {
                 .build();
     }
 
-    @Override
+    @Path("delete")
+    @DELETE
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response delTest(String jsonInput) {
         System.out.println("DELETE method called");
         System.out.println("Data received \n"+ jsonInput);

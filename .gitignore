@@ -33,3 +33,5 @@ build/
 .vscode/
 
 base-jax-rs/.DS_Store
+
+.DS_Store

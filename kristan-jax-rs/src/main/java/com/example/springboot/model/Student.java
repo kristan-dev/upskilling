@@ -1,27 +1,23 @@
 package com.example.springboot.model;
 
+import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+// A shortcut for @ToString, @EqualsAndHashCode, @Getter on all fields, 
+// and @Setter on all non-final fields, and @RequiredArgsConstructor!
 public class Student {
 
-    private String name = "";
-    private String student_id = "";
-    private String program = "";
+    private String name;
+    private String student_id;
+    private String program;
 
-    public String getStudentName() {
-        return this.name;
-    }
-    public void setStudentName(String name) {
-        this.name = name;
-    }
-    public String getStudent_Id() {
-        return this.student_id;
-    }
-    public void setStudent_id(String student_id) {
-        this.student_id = student_id;
-    }
-    public String getProgram() {
-        return this.program;
-    }
-    public void setProgram (String program) {
-        this.program = program;
-    }
+//    public Student(String name, String student_id, String program) {
+//        this.name = name;
+//        this.student_id = student_id;
+//        this.program = program;
+//    }
 }
