@@ -1,7 +1,7 @@
-package com.melvs.melvsboot;
+package com.melvs.melvsboot.repository;
 
+import com.melvs.melvsboot.model.GetList;
 import org.springframework.stereotype.Service;
-
 import java.util.Arrays;
 import java.util.List;
 

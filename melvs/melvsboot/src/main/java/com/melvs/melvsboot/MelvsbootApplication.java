@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MelvsbootApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(MelvsbootApplication.class, args);
 	}
 
