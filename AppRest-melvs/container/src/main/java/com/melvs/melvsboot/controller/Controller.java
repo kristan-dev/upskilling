@@ -1,34 +1,36 @@
 package com.melvs.melvsboot.controller;
 
-import com.melvs.melvsboot.services.BusinessService;
+import com.melvs.melvsboot.model.GetListBuilder;
+import com.melvs.melvsboot.repository.BusinessService;
 import com.melvs.melvsboot.model.GetList;
+import com.melvs.melvsboot.repository.BusinessServiceNew2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.List;
 
 //controller rest mapping
 @RestController
 public class Controller {
 
-    @GetMapping("/NewRepo")
-    public String repo(){
-        return "Sample save message!";
-    }
-
-//means needs another dependencies to map
     @Autowired
-    private BusinessService bs;
+    private BusinessServiceNew2 bsn;
 
-//request mapping endpoint
-    @RequestMapping("/")
+    @RequestMapping(method = RequestMethod.GET, value = "/NewRepo")
+    public List<GetListBuilder> getmyList() {return bsn.getAllList2(); }
+
+
+    @RequestMapping(method = RequestMethod.GET, value = "/")
     public String index(){
         return "This is a simple test SpringBoot";
     }
 
 
-    @RequestMapping("/GetEnd")
+    //means needs another dependencies to map
+    @Autowired
+    private BusinessService bs;
+
+    @RequestMapping(method = RequestMethod.GET, value = "/GetEnd")
     public List<GetList> getAllList() {
         return bs.getAllList();
         }
@@ -41,8 +43,7 @@ public class Controller {
 
 
     @RequestMapping(method = RequestMethod.PUT, value = "/PutEnd")
-    public String testput(){return "Sample return for Put message!";
-    }
+    public String testput(){return "Sample return for Put message!";}
 
 
     @RequestMapping(method = RequestMethod.PATCH, value = "/PatchEnd")
@@ -50,8 +51,6 @@ public class Controller {
 
 
     @RequestMapping(method = RequestMethod.DELETE, value = "DeleteEnd")
-    public String testdelete(){
-        return "Sample return for Delete message";
-    }
+    public String testdelete(){return "Sample return for Delete message";}
 
     }
