@@ -105,8 +105,7 @@ public class RestServices {
         String response = this.convertResponseToString(responseBody);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
-
+    
     @RequestMapping(method = RequestMethod.DELETE, value = "delete", consumes = "application/json")
     public ResponseEntity<String> deltest(@RequestBody String jsonStringInput) {
         Map<String, String> responseBody = new HashMap<>();
