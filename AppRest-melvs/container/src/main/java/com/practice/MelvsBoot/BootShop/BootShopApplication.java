@@ -1,15 +1,13 @@
-package com.melvs.melvsboot;
+package com.practice.MelvsBoot.BootShop;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-//starting point of spring bootstrap
 @SpringBootApplication
-public class MelvsbootApplication {
+public class BootShopApplication {
 
 	public static void main(String[] args) {
-
-		SpringApplication.run(MelvsbootApplication.class, args);
+		SpringApplication.run(BootShopApplication.class, args);
 	}
 
 }
