@@ -68,6 +68,7 @@ public class RestServices {
         responseBody.put("status", "success");
         responseBody.put("content", "GET Method Called");
         String response = this.convertResponseToString(responseBody);
+        log.info(response);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -84,7 +85,7 @@ public class RestServices {
         responseBody.put("content", jsonStringInput);
 
         String response = this.convertResponseToString(responseBody);
-
+        log.info(response);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -94,6 +95,7 @@ public class RestServices {
         responseBody.put("status", "success");
         responseBody.put("content", "PUT Method Called");
         String response = this.convertResponseToString(responseBody);
+        log.info(response);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -103,15 +105,17 @@ public class RestServices {
         responseBody.put("status", "success");
         responseBody.put("content", "PATCH Method Called");
         String response = this.convertResponseToString(responseBody);
+        log.info(response);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    
+
     @RequestMapping(method = RequestMethod.DELETE, value = "delete", consumes = "application/json")
     public ResponseEntity<String> deltest(@RequestBody String jsonStringInput) {
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("status", "success");
         responseBody.put("content", "Delete Method Called");
         String response = this.convertResponseToString(responseBody);
+        log.info(response);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
