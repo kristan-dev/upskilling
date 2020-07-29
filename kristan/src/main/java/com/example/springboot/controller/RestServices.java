@@ -48,6 +48,20 @@ public class RestServices {
         return "Server Error";
     }
 
+    private Map<String, String> convertStringToMap(String stringData) {
+        Map<String, String> responseObject = new HashMap<>();
+        try{
+            ObjectMapper mapper = new ObjectMapper();
+            return mapper.readValue(stringData, Map.class);
+        }
+        catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        responseObject.put("status", "error");
+        return responseObject;
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "students", produces = "application/json")
     public ResponseEntity<String> allStudents() {
         String response = this.convertResponseToString(this.allStudents);
