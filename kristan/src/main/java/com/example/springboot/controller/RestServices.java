@@ -79,6 +79,10 @@ public class RestServices {
         if (StringUtils.isEmpty(jsonStringInput)) {
             responseBody.put("status", "fail");
             responseBody.put("content", "empty request");
+
+            String response = this.convertResponseToString(responseBody);
+            log.info(response);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
         responseBody.put("status", "success");
