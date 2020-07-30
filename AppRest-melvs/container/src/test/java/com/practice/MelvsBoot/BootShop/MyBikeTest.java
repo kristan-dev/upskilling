@@ -7,7 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import org.junit.Test;
 import org.junit.Before;
@@ -25,55 +26,45 @@ public class MyBikeTest extends BootShopApplicationTests{
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
-//    @Test
-//        public void testbike () throws Exception {
-//        mockMvc.perform(get("/Bike")).andExpect(status().isOk())
-//                // .andExpect(jsonPath("$[0].ID").value("asd013"))
-//                .andExpect(jsonPath("$[0].Brand").value("Bianchi"))
-//                .andExpect(jsonPath("$[0].FrameSize").value("27er"))
-//                .andExpect(jsonPath("$[0].Wheel").value("27"))
-//                .andExpect(jsonPath("$[0].Speed").value("3x9"));
-//    }
-
     @Test
     public void getBikeTest() throws Exception {
         this.mockMvc.perform(
-                get("http://localhost:7224/Bike"))
+                get("http://localhost:7224/page/bikes"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void getAccessoriesTest() throws Exception {
         this.mockMvc.perform(
-                get("http://localhost:7224/Accessories"))
+                get("http://localhost:7224/page/accessories"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void getPostTest() throws Exception {
         this.mockMvc.perform(
-                get("http://localhost:7224/PostEnd"))
+                post("http://localhost:7224/page/postEnd"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void getPutTest() throws Exception {
         this.mockMvc.perform(
-                get("http://localhost:7224/PutEnd"))
+                put("http://localhost:7224/page/putEnd"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void getPatchTest() throws Exception {
         this.mockMvc.perform(
-                get("http://localhost:7224/DeletehEnd"))
+                patch("http://localhost:7224/page/patchEnd"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void getDeleteTest() throws Exception {
         this.mockMvc.perform(
-                get("http://localhost:7224/PatchEnd"))
+                delete("http://localhost:7224/page/deleteEnd"))
                 .andExpect(status().isOk());
     }
 
@@ -87,7 +78,19 @@ public class MyBikeTest extends BootShopApplicationTests{
     public void getAllBike() {
         MyBikeService mybiketest = new MyBikeService();
         Assert.assertEquals("Available bikes", 5, mybiketest.getBikeList().size());
-
     }
+
+    @Test
+    public void getAccessoriesTrueTest() {
+        MyAccessoriesService myaccessoriestruetest = new MyAccessoriesService();
+        Assert.assertTrue("Ok",myaccessoriestruetest.getAcc().size() == 2);
+    }
+
+    @Test
+    public void getBikeTrueTest() {
+        MyBikeService mybiketruetest = new MyBikeService();
+        Assert.assertTrue("Ok",mybiketruetest.getBikeList().size() == 5);
+    }
+
 }
 
