@@ -13,5 +13,5 @@ rest_client_utility.jar
 set_cron.sh
 * Dockerfile 
 Dockerfile
-* SpringBoot Application 
+* SpringBoot Application (Apply Lombok Annotations to Springboot app #9) 
 BootShopApplication
