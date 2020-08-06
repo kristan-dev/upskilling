@@ -1,70 +1,139 @@
 package com.example.springboot.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.springboot.model.Program;
+import com.example.springboot.model.Student;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.util.StringUtils;
 
-import java.util.LinkedList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
+import com.example.springboot.repository.Students;
+import com.example.springboot.repository.Programs;
+
+@RequestMapping(value = "/api")
 @RestController
+@Slf4j
 public class RestServices {
 
-    @GetMapping(path = "/gettest", produces = "application/json")
-    public String getTest() {
-        System.out.println("GET method called");
-        return "GET Method Called";
+    private Collection<Student> allStudents;
+    private Collection<Program> allPrograms;
+
+    public RestServices() {
+        Students initStudentRepo = new Students();
+        this.allStudents = initStudentRepo.getAllStudents();
+
+        Programs initProgramsRepo = new Programs();
+        this.allPrograms = initProgramsRepo.getAllPrograms();
     }
 
-    @Autowired
-    private LinkedList<String> allStudents;
+    private String convertResponseToString(Object response) {
+        try{
+            ObjectMapper mapper = new ObjectMapper();
+            String jsonResponse = mapper.writeValueAsString(response);
+            return jsonResponse;
+        }
+        catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
 
-    @GetMapping(path = "/getstudents", produces = "application/json")
-    public String getAllStudents() {
-        String response = this.allStudents.toString();
-        System.out.println(response);
-        return response;
+        return "Server Error";
     }
 
-    @PostMapping(path = "/posttest", consumes = "application/json", produces = "application/json")
-    public String postTest( @RequestBody String jsonStringInput) {
+    private Map<String, String> convertStringToMap(String stringData) {
+        Map<String, String> responseObject = new HashMap<>();
+        try{
+            ObjectMapper mapper = new ObjectMapper();
+            return mapper.readValue(stringData, Map.class);
+        }
+        catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        responseObject.put("status", "error");
+        return responseObject;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "students", produces = "application/json")
+    public ResponseEntity<String> allStudents() {
+        String response = this.convertResponseToString(this.allStudents);
+        log.info(response);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "programs", produces = "application/json")
+    public ResponseEntity<String> allPrograms() {
+        String response = this.convertResponseToString(this.allPrograms);
+        log.info(response);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "get", produces = "application/json")
+    public ResponseEntity<String> getTest() {
+        Map<String, String> responseBody = new HashMap<>();
+        responseBody.put("status", "success");
+        responseBody.put("content", "GET Method Called");
+        String response = this.convertResponseToString(responseBody);
+        log.info(response);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "post", produces = "application/json", consumes = "application/json")
+    public ResponseEntity<String> postTest(@RequestBody String jsonStringInput) {
+        Map<String, String> responseBody = new HashMap<>();
 
         if (StringUtils.isEmpty(jsonStringInput)) {
-            return "invalid request";
+            responseBody.put("status", "fail");
+            responseBody.put("content", "empty request");
+
+            String response = this.convertResponseToString(responseBody);
+            log.info(response);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
-        jsonStringInput = "{\n" +
-                "\"json_sent\":" +
-                    jsonStringInput +
-                "}";
-        System.out.println("Data to be returned\n" + jsonStringInput);
-        System.out.println("POST method called");
-        return jsonStringInput;
+
+        responseBody.put("status", "success");
+        responseBody.put("content", jsonStringInput);
+
+        String response = this.convertResponseToString(responseBody);
+        log.info(response);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PutMapping(path = "/puttest", consumes = "application/json", produces = "application/json")
-    public String puttest(@RequestBody String jsonStringInput) {
-        System.out.println("Data to be Put\n"+ jsonStringInput);
-        System.out.println("PUT method called");
-        return jsonStringInput;
+    @RequestMapping(method = RequestMethod.PUT, value = "put", consumes = "application/json")
+    public ResponseEntity<String> putTest(@RequestBody String jsonStringInput) {
+        Map<String, String> responseBody = new HashMap<>();
+        responseBody.put("status", "success");
+        responseBody.put("content", "PUT Method Called");
+        String response = this.convertResponseToString(responseBody);
+        log.info(response);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PatchMapping(path = "/patchtest", consumes = "application/json", produces = "application/json")
-    public String patchtest(@RequestBody String jsonStringInput) {
-        System.out.println("Data to be Patched\n"+ jsonStringInput);
-        System.out.println("PATCH method called");
-        return "PATCH method called";
+    @RequestMapping(method = RequestMethod.PATCH, value = "patch", consumes = "application/json")
+    public ResponseEntity<String> patchTest(@RequestBody String jsonStringInput) {
+        Map<String, String> responseBody = new HashMap<>();
+        responseBody.put("status", "success");
+        responseBody.put("content", "PATCH Method Called");
+        String response = this.convertResponseToString(responseBody);
+        log.info(response);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping(path = "/deltest", produces = "application/json")
-    public String deltest(@RequestBody String jsonStringInput) {
-        System.out.println("Data to be deleted\n" +jsonStringInput);
-        System.out.println("DELETE method called");
-        return "DELETE method Called";
+    @RequestMapping(method = RequestMethod.DELETE, value = "delete", consumes = "application/json")
+    public ResponseEntity<String> deltest(@RequestBody String jsonStringInput) {
+        Map<String, String> responseBody = new HashMap<>();
+        responseBody.put("status", "success");
+        responseBody.put("content", "Delete Method Called");
+        String response = this.convertResponseToString(responseBody);
+        log.info(response);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
