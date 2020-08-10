@@ -4,6 +4,8 @@ import com.example.springboot.model.Program;
 import com.example.springboot.model.Student;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
@@ -18,16 +20,21 @@ import java.util.Map;
 
 import com.example.springboot.repository.Students;
 import com.example.springboot.repository.Programs;
+import com.example.springboot.controller.SerializerService;
 
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/studentapi")
 @RestController
 @Slf4j
-public class RestServices {
+public class StudentsController {
 
     private Collection<Student> allStudents;
     private Collection<Program> allPrograms;
 
-    public RestServices() {
+    @Autowired
+    @Qualifier("serializer")
+    private SerializerService serializerService;
+
+    public StudentsController() {
         Students initStudentRepo = new Students();
         this.allStudents = initStudentRepo.getAllStudents();
 
@@ -35,7 +42,7 @@ public class RestServices {
         this.allPrograms = initProgramsRepo.getAllPrograms();
     }
 
-    private String convertResponseToString(Object response) {
+    private String convertObjectToString(Object response) {
         try{
             ObjectMapper mapper = new ObjectMapper();
             String jsonResponse = mapper.writeValueAsString(response);
@@ -64,14 +71,15 @@ public class RestServices {
 
     @RequestMapping(method = RequestMethod.GET, value = "students", produces = "application/json")
     public ResponseEntity<String> allStudents() {
-        String response = this.convertResponseToString(this.allStudents);
+//        String response = this.convertObjectToString(this.allStudents);
+        String response = serializerService.convertObjectToString(this.allStudents);
         log.info(response);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "programs", produces = "application/json")
     public ResponseEntity<String> allPrograms() {
-        String response = this.convertResponseToString(this.allPrograms);
+        String response = this.convertObjectToString(this.allPrograms);
         log.info(response);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -81,7 +89,7 @@ public class RestServices {
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("status", "success");
         responseBody.put("content", "GET Method Called");
-        String response = this.convertResponseToString(responseBody);
+        String response = this.convertObjectToString(responseBody);
         log.info(response);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -94,7 +102,7 @@ public class RestServices {
             responseBody.put("status", "fail");
             responseBody.put("content", "empty request");
 
-            String response = this.convertResponseToString(responseBody);
+            String response = this.convertObjectToString(responseBody);
             log.info(response);
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
@@ -102,7 +110,7 @@ public class RestServices {
         responseBody.put("status", "success");
         responseBody.put("content", jsonStringInput);
 
-        String response = this.convertResponseToString(responseBody);
+        String response = this.convertObjectToString(responseBody);
         log.info(response);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -112,7 +120,7 @@ public class RestServices {
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("status", "success");
         responseBody.put("content", "PUT Method Called");
-        String response = this.convertResponseToString(responseBody);
+        String response = this.convertObjectToString(responseBody);
         log.info(response);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -122,7 +130,7 @@ public class RestServices {
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("status", "success");
         responseBody.put("content", "PATCH Method Called");
-        String response = this.convertResponseToString(responseBody);
+        String response = this.convertObjectToString(responseBody);
         log.info(response);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -132,7 +140,7 @@ public class RestServices {
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("status", "success");
         responseBody.put("content", "Delete Method Called");
-        String response = this.convertResponseToString(responseBody);
+        String response = this.convertObjectToString(responseBody);
         log.info(response);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
