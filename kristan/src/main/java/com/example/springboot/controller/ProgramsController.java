@@ -30,7 +30,7 @@ public class ProgramsController {
         this.allPrograms = initProgramsRepo.getAllPrograms();
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/", produces = "application/json")
+    @RequestMapping(method = RequestMethod.GET, value = "", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public String allPrograms() {
         String response = serializerService.convertObjectToString(this.allPrograms);

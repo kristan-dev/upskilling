@@ -39,7 +39,7 @@ public class StudentsController {
         this.allStudents = initStudentRepo.getAllStudents();
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/", produces = "application/json")
+    @RequestMapping(method = RequestMethod.GET, value = "", produces = "application/json")
     public ResponseEntity<String> allStudents() {
         String response = serializerService.convertObjectToString(this.allStudents);
         log.info(response);
