@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 
@@ -22,13 +23,12 @@ import com.example.springboot.repository.Students;
 import com.example.springboot.repository.Programs;
 import com.example.springboot.controller.SerializerService;
 
-@RequestMapping(value = "/studentapi")
-@RestController
+@RequestMapping(value = "/students")
+@Controller
 @Slf4j
 public class StudentsController {
 
     private Collection<Student> allStudents;
-    private Collection<Program> allPrograms;
 
     @Autowired
     @Qualifier("serializer")
@@ -37,49 +37,11 @@ public class StudentsController {
     public StudentsController() {
         Students initStudentRepo = new Students();
         this.allStudents = initStudentRepo.getAllStudents();
-
-        Programs initProgramsRepo = new Programs();
-        this.allPrograms = initProgramsRepo.getAllPrograms();
     }
 
-    private String convertObjectToString(Object response) {
-        try{
-            ObjectMapper mapper = new ObjectMapper();
-            String jsonResponse = mapper.writeValueAsString(response);
-            return jsonResponse;
-        }
-        catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
-        return "Server Error";
-    }
-
-    private Map<String, String> convertStringToMap(String stringData) {
-        Map<String, String> responseObject = new HashMap<>();
-        try{
-            ObjectMapper mapper = new ObjectMapper();
-            return mapper.readValue(stringData, Map.class);
-        }
-        catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
-        responseObject.put("status", "error");
-        return responseObject;
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "students", produces = "application/json")
+    @RequestMapping(method = RequestMethod.GET, value = "/", produces = "application/json")
     public ResponseEntity<String> allStudents() {
-//        String response = this.convertObjectToString(this.allStudents);
         String response = serializerService.convertObjectToString(this.allStudents);
-        log.info(response);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "programs", produces = "application/json")
-    public ResponseEntity<String> allPrograms() {
-        String response = this.convertObjectToString(this.allPrograms);
         log.info(response);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -89,7 +51,7 @@ public class StudentsController {
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("status", "success");
         responseBody.put("content", "GET Method Called");
-        String response = this.convertObjectToString(responseBody);
+        String response = serializerService.convertObjectToString(responseBody);
         log.info(response);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -102,7 +64,7 @@ public class StudentsController {
             responseBody.put("status", "fail");
             responseBody.put("content", "empty request");
 
-            String response = this.convertObjectToString(responseBody);
+            String response = serializerService.convertObjectToString(responseBody);
             log.info(response);
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
@@ -110,7 +72,7 @@ public class StudentsController {
         responseBody.put("status", "success");
         responseBody.put("content", jsonStringInput);
 
-        String response = this.convertObjectToString(responseBody);
+        String response = serializerService.convertObjectToString(responseBody);
         log.info(response);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -120,7 +82,7 @@ public class StudentsController {
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("status", "success");
         responseBody.put("content", "PUT Method Called");
-        String response = this.convertObjectToString(responseBody);
+        String response = serializerService.convertObjectToString(responseBody);
         log.info(response);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -130,7 +92,7 @@ public class StudentsController {
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("status", "success");
         responseBody.put("content", "PATCH Method Called");
-        String response = this.convertObjectToString(responseBody);
+        String response = serializerService.convertObjectToString(responseBody);
         log.info(response);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -140,7 +102,7 @@ public class StudentsController {
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("status", "success");
         responseBody.put("content", "Delete Method Called");
-        String response = this.convertObjectToString(responseBody);
+        String response = serializerService.convertObjectToString(responseBody);
         log.info(response);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
