@@ -6,11 +6,10 @@ import com.practice.MelvsBoot.BootShop.model.Accessories;
 import com.practice.MelvsBoot.BootShop.model.MyBike;
 import com.practice.MelvsBoot.BootShop.repository.MyAccessoriesService;
 import com.practice.MelvsBoot.BootShop.repository.MyBikeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Collection;
 import java.util.List;
 
@@ -18,30 +17,35 @@ import java.util.List;
 @RequestMapping(value = "/page")
 public class PageController {
 
-    MyBikeService mybike = new MyBikeService();
-    @RequestMapping(method = RequestMethod.GET, value = "/bikes")
-    @ResponseStatus(HttpStatus.OK)
-    public List<MyBike> getAllList() {
-        return mybike.getBikeList();
-    }
-
     private Collection<Accessories> allaccessories;
+    private List<MyBike> bk;
+    @Autowired
+    private ObjectMapper mapper;
+
     public PageController(){
         MyAccessoriesService acrepo = new MyAccessoriesService();
         this.allaccessories = acrepo.getAcc();
+
+        MyBikeService mybike = new MyBikeService();
+        this.bk = mybike.getBikeList();
     }
-    @RequestMapping(method = RequestMethod.GET, value = "/accessories")
-    @ResponseStatus(HttpStatus.OK)
-    public String allaccesories(){
+
+    @GetMapping(value = "bikes")
+    public ResponseEntity<String> allbikes (){
+        List<MyBike> rs = this.bk;
+        String responseString1 = this.convertResponseToString(rs);
+        return new ResponseEntity<>(responseString1, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "accessories")
+    public ResponseEntity<String> allaccessories (){
         Collection<Accessories> response = this.allaccessories;
         String responseString = this.convertResponseToString(response);
-        System.out.println(responseString);
-        return responseString;
+        return new ResponseEntity<>(responseString, HttpStatus.OK);
     }
 
     private String convertResponseToString(Object response) {
         try{
-            ObjectMapper mapper = new ObjectMapper();
             String jsonResponse = mapper.writeValueAsString(response);
             return jsonResponse;
         }
@@ -51,28 +55,23 @@ public class PageController {
         return "Server Error";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/")
-    ResponseEntity<String> index () {
-        return new ResponseEntity<>("This is a simple Spring Boot Application", HttpStatus.OK);
-    }
-
-    @RequestMapping(method = RequestMethod.POST, value ="/postEnd", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<String> postend (){
+    @PostMapping(value ="postEnd")
+    public ResponseEntity<String> postend (){
         return new ResponseEntity<>("This is a sample message for Post Request", HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/putEnd")
-    ResponseEntity<String> putend (){
+    @PutMapping(value = "putEnd")
+    public ResponseEntity<String> putend (){
         return new ResponseEntity<>("This is a sample message for Put Request", HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.PATCH, value = "/patchEnd")
-    ResponseEntity<String> patchend (){
+    @PatchMapping(value = "patchEnd")
+    public ResponseEntity<String> patchend (){
         return new ResponseEntity<>("This is a sample message for Patch Request", HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/deleteEnd")
-    ResponseEntity<String> deleteend (){
+    @DeleteMapping(value = "deleteEnd")
+    public ResponseEntity<String> deleteend (){
         return new ResponseEntity<>("This is a sample message for Delete Request", HttpStatus.OK);
     }
 
