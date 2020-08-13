@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -30,23 +31,23 @@ public class StudentsController {
 
     private Collection<Student> allStudents;
 
-    @Autowired
     @Qualifier("serializer")
-    private SerializerService serializerService;
+    private final SerializerService serializerService;
 
-    public StudentsController() {
+    public StudentsController(SerializerService serializerService) {
+        this.serializerService = serializerService;
         Students initStudentRepo = new Students();
         this.allStudents = initStudentRepo.getAllStudents();
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "", produces = "application/json")
+    @GetMapping(value="", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> allStudents() {
         String response = serializerService.convertObjectToString(this.allStudents);
         log.info(response);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "get", produces = "application/json")
+   @GetMapping(value = "/get", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getTest() {
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("status", "success");
