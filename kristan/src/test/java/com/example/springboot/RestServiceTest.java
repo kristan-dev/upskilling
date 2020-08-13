@@ -32,21 +32,21 @@ public class RestServiceTest {
     @Test
     public void getStudentsTest() throws Exception {
         this.mockMvc.perform(
-                get("http://localhost:8080/api/students"))
+                get("http://localhost:8080/students"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void getProgramsTest() throws Exception {
         this.mockMvc.perform(
-                get("http://localhost:8080/api/programs"))
+                get("http://localhost:8080/programs"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void getTestTest() throws Exception {
         this.mockMvc.perform(
-                get("http://localhost:8080/api/get"))
+                get("http://localhost:8080/students/get"))
                 .andExpect(status().isOk());
     }
 
@@ -61,7 +61,7 @@ public class RestServiceTest {
         String requestBody = mapper.writeValueAsString(jsonInput);
 
         this.mockMvc.perform(MockMvcRequestBuilders
-                .post("http://localhost:8080/api/post")
+                .post("http://localhost:8080/students/post")
                 .content(requestBody)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
@@ -79,7 +79,7 @@ public class RestServiceTest {
         String requestBody = mapper.writeValueAsString(jsonInput);
 
         this.mockMvc.perform(MockMvcRequestBuilders
-                .put("http://localhost:8080/api/put")
+                .put("http://localhost:8080/students/put")
                 .content(requestBody)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
@@ -97,7 +97,7 @@ public class RestServiceTest {
         String requestBody = mapper.writeValueAsString(jsonInput);
 
         this.mockMvc.perform(MockMvcRequestBuilders
-                .patch("http://localhost:8080/api/patch")
+                .patch("http://localhost:8080/students/patch")
                 .content(requestBody)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
@@ -115,7 +115,7 @@ public class RestServiceTest {
         String requestBody = mapper.writeValueAsString(jsonInput);
 
         this.mockMvc.perform(MockMvcRequestBuilders
-                .delete("http://localhost:8080/api/delete")
+                .delete("http://localhost:8080/students/delete")
                 .content(requestBody)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
